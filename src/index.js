@@ -50,7 +50,6 @@ function checksExistsTodo(request, response, next) {
   request.todoIndex = todoIndex;
 
   return next();
-
 }
 
 app.post('/users', (request, response) => {
@@ -111,21 +110,13 @@ app.post('/todos', checksExistsUserAccount, (request, response) => {
 app.put('/todos/:id', checksExistsUserAccount, checksExistsTodo, (request, response) => {
   // Complete aqui
   const { title, deadline } = request.body;
-  const { id } = request.params; //recebendo id pela rota
+  //const { id } = request.params; //recebendo id pela rota
   const { user, todoIndex } = request; //recebendo user e index pelo middleware
 
-  /*const todoIndex = user.todos.findIndex((todo) => todo.id === id);
-
-  //console.log(index);
-
-  //se n existe o todo
-  if (todoIndex < 0) {
-    return response.status(404).json({ error: "todo not found" });
-  }*/
 
   //modificar todo de index encontrado
   user.todos[todoIndex] = {
-    id: id,
+    id: user.todos[todoIndex].id,
     title: title,
     done: user.todos[todoIndex].done,
     deadline: new Date(deadline),
